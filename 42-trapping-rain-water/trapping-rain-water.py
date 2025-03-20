@@ -7,17 +7,16 @@ class Solution(object):
         lm,rm=0,0
 
         while l<r:
-            lm=max(lm,h[l])
-            rm=max(rm,h[r])
-
-            if lm!=0 and rm!=0:
-                cm=min(lm,rm)
-                c=min(h[l],h[r])
-                w+=cm-c
-            
             if h[l]<h[r]:
+                if h[l]>=lm:
+                    lm=h[l]
+                else:
+                    w+=lm-h[l]
                 l+=1
             else:
+                if h[r]>=rm:
+                    rm=h[r]
+                else:
+                    w+=rm-h[r]
                 r-=1
-        
         return w
