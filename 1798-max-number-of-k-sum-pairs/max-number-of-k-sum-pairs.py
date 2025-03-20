@@ -1,21 +1,18 @@
 class Solution(object):
-    def maxOperations(self, n, k):
+    def maxOperations(self, n, t):
 
-        c=Counter(n)
+        n.sort()
+        l,r=0,len(n)-1
         o=0
-
-        for i in c:
-            t=k-i
-            if t in c:
-                if i==t:
-                    m=c[t]//2
-                else:
-                    m=min(c[t],c[i])
-                c[t]-=m
-                c[i]-=m
-                o+=m
-
+        while l<r:
+            s=n[r]+n[l]
+            if s==t:
+                o+=1
+                l+=1
+                r-=1
+            elif s>t:
+                r-=1
+            else:
+                l+=1            
         return o
-            
-            
         
