@@ -2,11 +2,9 @@ class Solution(object):
     def maxOperations(self, n, k):
 
         c=Counter(n)
-
-        s=set(n)
         o=0
 
-        for i in s:
+        for i in c:
             t=k-i
             if t in c:
                 if i==t:
