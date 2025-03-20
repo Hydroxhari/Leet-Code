@@ -1,14 +1,11 @@
 class Solution(object):
     def dailyTemperatures(self, t):
         s=[]
-        r=[]
+        r=[0]*len(t)
 
-        for i in range(len(t)-1,-1,-1):
-            while s and t[s[-1]]<=t[i]:
-                s.pop()
-            if not s:
-                r.append(0)
-            else:
-                r.append(s[-1]-i)
+        for i in range(len(t)):
+            while s and t[s[-1]]<t[i]:
+                p=s.pop()
+                r[p]=i-p
             s.append(i)
-        return r[::-1]
+        return r
