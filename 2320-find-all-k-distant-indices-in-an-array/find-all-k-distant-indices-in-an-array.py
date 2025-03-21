@@ -9,7 +9,6 @@ class Solution(object):
                     if abs(r-l)<=k:
                         res.add(l)
                     l+=1
-        print(res)
         l=len(n)-1
         for r in range(len(n)-1,-1,-1):
             if n[r]==t:
@@ -17,7 +16,6 @@ class Solution(object):
                     if abs(r-l)<=k:
                         res.add(l)
                     l-=1
-        print(res)
         return sorted(res)
 
 
