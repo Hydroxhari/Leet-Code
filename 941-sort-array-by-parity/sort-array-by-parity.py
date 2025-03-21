@@ -1,5 +1,8 @@
 class Solution(object):
     def sortArrayByParity(self, n):
-        e = [i for i in n if i % 2 == 0]
-        o = [i for i in n if i % 2 != 0]
-        return e+o
+        l=0
+        for r in range(len(n)):
+            if n[r]%2==0:
+                n[l],n[r]=n[r],n[l]
+                l+=1
+        return n
