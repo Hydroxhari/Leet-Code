@@ -13,7 +13,7 @@ class Solution(object):
         l=len(n)-1
         for r in range(len(n)-1,-1,-1):
             if n[r]==t:
-                while l>=r:
+                while l>r:
                     if abs(r-l)<=k:
                         res.add(l)
                     l-=1
