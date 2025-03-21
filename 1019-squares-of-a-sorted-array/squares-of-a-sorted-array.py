@@ -1,5 +1,5 @@
 class Solution(object):
-    def sortedSquares(self, n):
-        m=[i**2 for i in n]
-        m.sort()
-        return m
+    def sortedSquares(self, nums):
+        res = [n**2 for n in nums]
+
+        return sorted(res)
