@@ -1,22 +1,12 @@
 class Solution(object):
     def findKDistantIndices(self, n, t, k):
 
-        res=set()
         l=0
-        for r in range(len(n)):
-            if n[r]==t:
-                while l<=r:
-                    if abs(r-l)<=k:
-                        res.add(l)
+        res=[]
+        for i in range(len(n)):
+            if n[i]==t:
+                l=max(l,i-k)
+                while l<len(n) and l<=k+i:
+                    res.append(l)
                     l+=1
-        l=len(n)-1
-        for r in range(len(n)-1,-1,-1):
-            if n[r]==t:
-                while l>r:
-                    if abs(r-l)<=k:
-                        res.add(l)
-                    l-=1
-        return sorted(res)
-
-
-        
+        return res
