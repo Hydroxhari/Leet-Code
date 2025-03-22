@@ -1,17 +1,32 @@
 class Solution(object):
-    def copyRandomList(self, head):
-        hMap = {None : None}
-        cur = head
-        while cur:
-            copy = ListNode(cur.val)
-            hMap[cur] = copy
-            cur = cur.next
+    def copyRandomList(self, h):
 
-        cur = head
-        while cur:
-            copy = hMap[cur]
-            copy.next = hMap[cur.next]
-            copy.random = hMap[cur.random]
-            cur = cur.next
-        return hMap[head] 
-        
+        r=Node(0)
+        c=r
+        th=h
+        i=0
+        di={}
+        d={}
+
+        while th:
+            x=th.val
+            di[th]=i
+            l=Node(x)
+            d[i]=l
+            i+=1
+            c.next=l
+            c=c.next
+            th=th.next
+            
+        th=h
+        c=r.next
+        i=0
+        while th:
+            ri = th.random
+            if ri in di:
+                m=di[ri]
+                c.random=d[m]
+            c=c.next
+            th=th.next
+
+        return r.next
