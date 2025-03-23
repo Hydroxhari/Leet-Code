@@ -1,5 +1,18 @@
 class Solution(object):
-    def maxDepth(self, root):
-        if not root:
+    def maxDepth(self, r):
+
+        if not r:
             return 0
-        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+
+        q=deque([r])
+        l=0
+        while q:
+            for i in range(len(q)):
+                e=q.popleft()
+                if e.left:
+                    q.append(e.left)
+                if e.right:
+                    q.append(e.right)
+            l+=1
+        return l
+
