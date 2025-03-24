@@ -1,15 +1,16 @@
 class Solution(object):
     def countDays(self, d, m):
-        m.sort(key=lambda x:x[0])
-        c=0
-        s,e=m[0]
-        c+=s-1
-        for i in range(1,len(m)):
-            cs,ce=m[i]
-            if cs>e:
-                c+=cs-e-1
-                e=ce
-            else:
-                e=max(ce,e)
-        c+=d-e
-        return c
+        if not m:
+            return d
+
+        m.sort()
+        free_days = 0
+        last_end = 0
+
+        for start, end in m:
+            if start > last_end + 1:
+                free_days += start - last_end - 1
+            last_end = max(last_end, end)
+
+        free_days += d - last_end
+        return free_days
