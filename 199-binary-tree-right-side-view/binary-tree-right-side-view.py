@@ -6,18 +6,15 @@ class Solution(object):
         a=[]
         q=deque([r])
         while q:
-            for _ in range(len(q)-1):
+            l=len(q)
+            for i in range(len(q)):
                 e=q.popleft()
                 if e.left:
                     q.append(e.left)
                 if e.right:
                     q.append(e.right)
-            e=q.popleft()
-            a.append(e.val)
-            if e.left:
-                q.append(e.left)
-            if e.right:
-                q.append(e.right)
+                if i==l-1:
+                    a.append(e.val)
         return a
 
         
