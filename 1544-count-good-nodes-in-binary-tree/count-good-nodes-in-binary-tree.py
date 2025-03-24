@@ -1,20 +1,16 @@
 class Solution(object):
-    def goodNodes(self, r):
-        
-        if not r:
+    def goodNodes(self, root):
+        if not root:
             return 0
-        
-        q=deque([(r,r.val)])
-        c=0
-        while q:
-            n,v=q.popleft()
-            if n.val>=v:
-                c+=1
-            
-            v=max(v,n.val)
-            if n.left:
-                q.append((n.left,v))
-            if n.right:
-                q.append((n.right,v))
-        return c
-        
+
+        def dfs(node, currmax):
+            if not node:
+                return
+            if node.val >= currmax:
+                count[0] += 1
+                currmax = node.val
+            dfs(node.left, currmax)
+            dfs(node.right, currmax)
+        count = [0]
+        dfs(root, root.val)
+        return count[0]
