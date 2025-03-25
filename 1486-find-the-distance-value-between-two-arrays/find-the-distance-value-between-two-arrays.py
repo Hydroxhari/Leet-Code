@@ -1,15 +1,25 @@
 class Solution(object):
     def findTheDistanceValue(self, a1, a2, d):
-        it=False
+        
+        def bt(a,i):
+            l,r=0,len(a)-1
+            while l<=r:
+                m=(l+r)//2
+                if abs(a[m]-i)<=d:
+                    return False
+                if a[m]>i:
+                    r=m-1
+                else:
+                    l=m+1
+            return True
+
+
+
+        a2.sort()
         c=0
         for i in a1:
-            for j in a2:
-                if abs(i-j)<=d:
-                    it=True
-                    break
-            if not it:
+            if bt(a2,i):
                 c+=1
-            it=False
         return c
 
 
