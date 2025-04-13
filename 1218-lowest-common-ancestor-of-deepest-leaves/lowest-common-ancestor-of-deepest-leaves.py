@@ -1,19 +1,24 @@
-class Solution:
-    def ht(self, node):
-        if not node:
-            return 0
-        return max(self.ht(node.left), self.ht(node.right)) + 1
-    
-    def dfs(self, node):
-        if not node:
-            return None
-        left, right = self.ht(node.left), self.ht(node.right)
-        if left == right:
-            return node
-        if left > right:
-            return self.dfs(node.left)
-        if left < right:
-            return self.dfs(node.right)
+class Solution(object):
+    def lcaDeepestLeaves(self, r):
 
-    def lcaDeepestLeaves(self, root):
-        return self.dfs(root)
+        def ht(r):
+            if not r:
+                return 0
+            return 1+max(ht(r.left),ht(r.right))
+        
+        h=ht(r)
+    
+        def dfs(n,d):
+            if not n:
+                return None
+            if d==h:
+                return n
+            
+            l = dfs(n.left,d+1)
+            r = dfs(n.right,d+1)
+
+            if l and r:
+                return n
+            return l or r
+            
+        return dfs(r,1)
