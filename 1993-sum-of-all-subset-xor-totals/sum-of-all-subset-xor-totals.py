@@ -1,11 +1,21 @@
 class Solution:
-    def subsetXORSum(self, nums):
-        n = len(nums)
-        total = 0
-        for mask in range(1 << n):
-            subset_xor = 0
-            for i in range(n):
-                if mask & (1 << i):
-                    subset_xor ^= nums[i]
-            total += subset_xor
-        return total
+    def subsetXORSum(self, n):
+
+        r=[]
+        lr=len(n)
+
+        def bt(s,l,a):
+            if s==lr:
+                r.append(a)
+                return 
+            r.append(a)
+            for i in range(s,lr):
+                l.append(n[i])
+                bt(i+1,l,a^n[i])
+                l.pop()
+            
+            return 
+
+        bt(0,[],0)
+        return sum(r)
+        
