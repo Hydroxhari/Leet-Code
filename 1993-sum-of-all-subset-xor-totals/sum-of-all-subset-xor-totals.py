@@ -1,21 +1,6 @@
 class Solution:
-    def subsetXORSum(self, n):
-
-        r=[]
-        lr=len(n)
-
-        def bt(s,l,a):
-            if s==lr:
-                r.append(a)
-                return 
-            r.append(a)
-            for i in range(s,lr):
-                l.append(n[i])
-                bt(i+1,l,a^n[i])
-                l.pop()
-            
-            return 
-
-        bt(0,[],0)
-        return sum(r)
-        
+    def subsetXORSum(self, nums):
+        total = 0
+        for num in nums:
+            total |= num  # bitwise OR of all elements
+        return total * (1 << (len(nums) - 1))  # total * 2^(n - 1)
