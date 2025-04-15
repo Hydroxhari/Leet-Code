@@ -1,14 +1,9 @@
 class Solution(object):
-    def minimumOperations(self, n):
-
-        c=0
-        i=0
-        l=len(n)
-        while n:
-            if len(n)==len(set(n)):
-                return c
-            c+=1
-            i+=3
-            if i>=l:
-                return c
-            n=n[3:]
+    def minimumOperations(self, nums):
+        seen = set()
+        n = len(nums)
+        for i in range(n - 1, -1, -1):
+            if nums[i] in seen:
+                return i // 3 + 1
+            seen.add(nums[i])
+        return 0
