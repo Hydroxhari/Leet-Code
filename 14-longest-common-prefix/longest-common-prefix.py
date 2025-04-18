@@ -1,13 +1,11 @@
 class Solution(object):
-    def longestCommonPrefix(self, s):
+    def longestCommonPrefix(self, strs):
+        if not strs:
+            return ""
 
-        s.sort(key=lambda x: len(x))
-        e=s[0]
-        l=len(e)
-
-        for i in s:
-            while e and i[:l]!=e:
-                e=e[:-1]
-                l-=1
-        
-        return e
+        for i in range(len(strs[0])):
+            char = strs[0][i]
+            for word in strs[1:]:
+                if i >= len(word) or word[i] != char:
+                    return strs[0][:i]
+        return strs[0]
