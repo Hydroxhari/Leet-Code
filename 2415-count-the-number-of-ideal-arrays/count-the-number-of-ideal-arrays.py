@@ -1,65 +1,47 @@
-from math import isqrt
-from collections import defaultdict
-from functools import lru_cache
-
-MODULO = 10**9 + 7
+MODULO = int(1e9+7)
+MAX_VALUE = int(1e4)
+STRICT_COUNTS = [[i+1 for i in range(MAX_VALUE)]]
+prev_row = [1] * MAX_VALUE
+next_row = [0] * MAX_VALUE
+prev_base = 1
+while (prev_base << 1) <= MAX_VALUE:
+    next_base = prev_base << 1
+    for i in range(next_base-1, MAX_VALUE):
+        next_row[i] = 0
+    for prev_num in range(prev_base, MAX_VALUE+1):
+        prev_count = prev_row[prev_num-1]
+        for mult in range(2, MAX_VALUE+1):
+            product = prev_num * mult
+            if product > MAX_VALUE:
+                break
+            out_i = product - 1
+            next_row[out_i] = (next_row[out_i] + prev_count) % MODULO
+    current_counts = [next_row[next_base-1]] * (MAX_VALUE+1-next_base)
+    for next_num in range(next_base+1, MAX_VALUE+1):
+        current_counts[next_num-next_base] = current_counts[next_num-1-next_base] + next_row[next_num-1]
+    STRICT_COUNTS.append(current_counts)
+    prev_base = next_base
+    prev_row, next_row = next_row, prev_row
+    
+#print("Maximum growing length is %d" % len(STRICT_COUNTS))
 
 class Solution:
-    def idealArrays(self, array_length: int, max_value: int) -> int:
-    
-        def generate_primes(limit):
-            is_prime = [True] * (limit + 1)
-            primes = []
-            for num in range(2, limit + 1):
-                if is_prime[num]:
-                    primes.append(num)
-                    for multiple in range(num * num, limit + 1, num):
-                        is_prime[multiple] = False
-            return primes
-
-        def build_factor_map(prime_list, limit):
-            factor_map = defaultdict(list)
-            prime_count = len(prime_list)
-
-   
-            for idx, prime in enumerate(prime_list):
-                factor_map[prime] = [0] * prime_count
-                factor_map[prime][idx] = 1
-
-            for value in range(3, limit + 1):
-                if value not in factor_map:
-                    factor_map[value] = [0] * prime_count
-                    for idx, prime in enumerate(prime_list):
-                        if value % prime == 0:
-                            factor_map[value] = factor_map[value // prime].copy()
-                            factor_map[value][idx] += 1
-                            break
-
-            return factor_map
-
-        @lru_cache(None)
-        def calculate_combinations(x, y):
-            if y == 0:
-                return 1
-            if y == 1:
-                return x
-            if y > x:
-                return 0
-            return (calculate_combinations(x - 1, y) + calculate_combinations(x - 1, y - 1)) % MODULO
-
-
-        primes = generate_primes(max_value)
-        factor_map = build_factor_map(primes, max_value)
-
-
-        total_arrays = 0
-        for value in range(1, max_value + 1):
-            factors = factor_map[value]
-            combinations_product = 1
-            for factor_count in factors:
-                if factor_count > 0:
-                    combinations_product *= calculate_combinations(factor_count + array_length - 1, min(array_length - 1, factor_count))
-                    combinations_product %= MODULO
-            total_arrays = (total_arrays + combinations_product) % MODULO
-
-        return total_arrays
+    def idealArrays(self, n: int, maxValue: int) -> int:
+        count = 0
+        combo = 1
+        top_factor = n - 1
+        bottom_factor = 1
+        base = 1
+        for k in range(min(n, len(STRICT_COUNTS))):
+            if base <= maxValue:
+                #print(k, combo)
+                #print(STRICT_COUNTS[k][maxValue-base])
+                count = (count + combo * STRICT_COUNTS[k][maxValue-base]) % MODULO
+            else:
+                break
+            combo *= top_factor
+            combo //= bottom_factor
+            top_factor -= 1
+            bottom_factor += 1
+            base <<= 1
+        return count
