@@ -1,13 +1,12 @@
 class Solution(object):
     def checkAlmostEquivalent(self, a, b):
 
-        c=Counter(a)
-        d=Counter(b)
+        l = [0]*26
 
-        s=set(a+b)
-
-        for i in s:
-            if abs(c[i]-d[i])>3:
-                return False
-        return True
+        for i,j in zip(a,b):
+            o=ord(i)-97
+            t=ord(j)-97
+            l[o]+=1
+            l[t]-=1
         
+        return max(max(l),abs(min(l)))<=3
