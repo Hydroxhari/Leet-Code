@@ -1,19 +1,15 @@
 class Solution(object):
     def maxProfit(self, p, f):
+
+        l=len(p)
+        b = [0]*l
+        s = [0]*l
+
+        b[0] = -p[0]
+
+        for i in range(1,l):
+            b[i] = max(b[i-1],s[i-1]- p[i])
+            s[i] = max(s[i-1],b[i-1]+p[i]-f)
         
-        l = len(p)
-
-        @lru_cache(None)
-        def dfs(i,buy):
-            if i==l:
-                return 0
-            
-            n=dfs(i+1,buy)
-            if buy:
-                b=dfs(i+1,not buy) - p[i]
-                return max(b,n)
-            else:
-                s=dfs(i+1,not buy) + p[i] - f
-                return max(s,n)
-
-        return dfs(0,1)
+        return s[-1]
+        
