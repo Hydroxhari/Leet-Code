@@ -1,9 +1,9 @@
 class Solution(object):
     def maxProfit(self, k, p):
-        from functools import cache
+        from functools import lru_cache
         l=len(p)
 
-        @cache
+        @lru_cache(None)
         def dfs(i,t,buy):
             if i==l or t==0:
                 return 0
