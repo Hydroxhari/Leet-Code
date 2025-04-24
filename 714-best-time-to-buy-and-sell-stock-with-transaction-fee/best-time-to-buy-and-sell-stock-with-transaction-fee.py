@@ -1,0 +1,19 @@
+class Solution(object):
+    def maxProfit(self, p, f):
+        
+        l = len(p)
+
+        @lru_cache(None)
+        def dfs(i,buy):
+            if i==l:
+                return 0
+            
+            n=dfs(i+1,buy)
+            if buy:
+                b=dfs(i+1,not buy) - p[i]
+                return max(b,n)
+            else:
+                s=dfs(i+1,not buy) + p[i] - f
+                return max(s,n)
+
+        return dfs(0,1)
