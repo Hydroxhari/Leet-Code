@@ -1,22 +1,21 @@
+from typing import List
 from collections import defaultdict
 
 class Solution:
-    def countCompleteSubarrays(self, nums):
-        total_unique = len(set(nums))
-        n = len(nums)
-        count = 0
-        freq = defaultdict(int)
-        
-        left = 0
-        
-        for right in range(n):
-            freq[nums[right]] += 1
+    def countCompleteSubarrays(self, n: List[int]) -> int:
+        d = defaultdict(int)
+        l = len(set(n))
+        j = 0
+        c = 0
 
-            while len(freq) == total_unique:
-                count += n - right  # all subarrays from left to end are complete
-                freq[nums[left]] -= 1
-                if freq[nums[left]] == 0:
-                    del freq[nums[left]]
-                left += 1
+        for i in range(len(n)):
+            d[n[i]] += 1  # fix: count value n[i]
+
+            while len(d) == l:
+                c += len(n) - i
+                d[n[j]] -= 1  # fix: decrease value n[j]
+                if d[n[j]] == 0:
+                    del d[n[j]]
+                j += 1
         
-        return count
+        return c
