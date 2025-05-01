@@ -1,14 +1,20 @@
 class Solution(object):
     def shortestToChar(self, s, c):
-        
-        l=[]
-        p=float('-inf')
+        n = len(s)
+        res = [0] * n
+        prev = float('-inf')
 
-        for i in range(len(s)):
-            if s[i]==c:
-                l.append(0)
-                p=i
-            else:
-                l.append(min(abs(i-p),abs((s.find(c,i))-i)))
+        # First pass: left to right
+        for i in range(n):
+            if s[i] == c:
+                prev = i
+            res[i] = i - prev if prev != float('-inf') else float('inf')
 
-        return l
+        # Second pass: right to left
+        prev = float('inf')
+        for i in range(n - 1, -1, -1):
+            if s[i] == c:
+                prev = i
+            res[i] = min(res[i], prev - i if prev != float('inf') else float('inf'))
+
+        return res
