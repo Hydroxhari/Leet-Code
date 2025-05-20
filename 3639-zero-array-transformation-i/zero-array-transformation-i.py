@@ -1,17 +1,14 @@
 class Solution(object):
-    def isZeroArray(self, n, q):
-        
-        l = [0]*(len(n)+1)
+    def isZeroArray(self, nums, queries):
 
-        for i,j in q:
-            l[i]+=1
-            l[j+1]-=1
-        
-        c=0
-        for i in range(len(n)):
-            c+=l[i]
-            n[i]-=c
-            if n[i]>0:
+        temp = [0] * (len(nums) + 1)
+        for q1, q2 in queries:
+            temp[q1] += 1
+            temp[q2 + 1] -= 1
+        cur = 0
+        # print(temp)
+        for i in range(len(nums)):
+            cur += temp[i]
+            if cur < nums[i]:
                 return False
-        
         return True
