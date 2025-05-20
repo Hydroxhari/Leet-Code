@@ -1,10 +1,13 @@
 class Solution(object):
-    def capitalizeTitle(self, t):
-        t=t.split()
-        s=''
-        for i in t:
-            if len(i)>2:
-                s+=capitalize(i) + ' '
+    def capitalizeTitle(self, title):
+        final=[]
+        word=title.split()
+        for i in word:
+            if len(i) <= 2:
+                final.append(i.lower())
+                pass
             else:
-                s+=lower(i)+' '
-        return s[:-1] if s else ''
+                u=i.lower()
+                f=u.capitalize()
+                final.append(f)
+        return ' '.join(final)
