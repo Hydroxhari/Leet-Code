@@ -1,23 +1,18 @@
+from collections import Counter
+
 class Solution(object):
-    def shortestCompletingWord(self, l, w):
-        
-        a=[]
-        for i in l:
-            if i.isalpha():
-                a.append(i.lower())
-        
-        d=Counter(a)
-        
-        r=''
+    def shortestCompletingWord(self, licensePlate, words):
+        # Create frequency map for license plate
+        required = Counter(c.lower() for c in licensePlate if c.isalpha())
 
-        for i in w:
-            if Counter(i)&d==d:
-                if not r:
-                    r=i
-                else:
-                    if len(r)>len(i):
-                        r=i
-        
-        return r
+        result = None
 
+        for word in words:
+            word_counter = Counter(word)
 
+            # Check if word satisfies all required letters
+            if all(word_counter[char] >= count for char, count in required.items()):
+                if result is None or len(word) < len(result):
+                    result = word
+
+        return result
