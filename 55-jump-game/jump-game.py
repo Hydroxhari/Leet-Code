@@ -11,4 +11,4 @@ class Solution(object):
             s=max(s-1,n[i])
             if s==0:
                 return False
-        return s!=0
+        return True
