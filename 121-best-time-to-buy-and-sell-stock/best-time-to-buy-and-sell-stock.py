@@ -1,19 +1,10 @@
 __import__("atexit").register(lambda: open("display_runtime.txt", "w").write("0"))
 
 class Solution(object):
-    def maxProfit(self, prices):
-        min_price = float('inf')
-        max_profit = 0
-        
-        # Iterate through the price list
-        for price in prices:
-            # Update minimum price if a lower price is found
-            min_price = min(min_price, price)
-            
-            # Calculate profit if we sell at the current price
-            profit = price - min_price
-            
-            # Update max profit if we get a higher profit
-            max_profit = max(max_profit, profit)
-        
-        return max_profit
+    def maxProfit(self, p):
+        a=p[0]
+        m=0
+        for i in p[1:]:
+            a=min(a,i)
+            m=max(m,i-a)
+        return m
