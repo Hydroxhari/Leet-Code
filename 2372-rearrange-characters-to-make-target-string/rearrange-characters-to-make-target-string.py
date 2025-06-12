@@ -1,11 +1,13 @@
 class Solution(object):
     def rearrangeCharacters(self, s, t):
-        c=Counter(s)
-        r=Counter(t)
 
-        a=float('inf')
-        for i in r:
-            n=c[i]/r[i]
-            a=min(a,n)
-        
-        return a
+        a=Counter(s)
+        b=Counter(t)
+
+        m=float('inf')
+
+        for i,j in b.items():
+            r=a[i]//j
+            m=min(m,r)
+        return m
+
