@@ -7,7 +7,8 @@ class Solution:
         }
 
         t=0
-        p=float('inf')
+        p=0
+
         for i in s:
             if d[i]>p:
                 t+=d[i]-p-p
