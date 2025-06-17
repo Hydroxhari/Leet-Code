@@ -1,14 +1,9 @@
 class Solution(object):
-    def restoreString(self, s, l):
-
-        d={}
-        for i in range(len(s)):
-            d[l[i]]=s[i]
+    def restoreString(self, s, indices):
+        n = len(s)
+        newLength = [''] * n
         
-        a=''
-        for i in range(len(s)):
-            a+=d[i]
-        
-        return a
-
-        
+        for i in range(n):
+            newLength[indices[i]] = s[i]
+            
+        return "".join(newLength)
