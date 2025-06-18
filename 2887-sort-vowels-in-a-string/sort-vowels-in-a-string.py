@@ -1,7 +1,7 @@
 class Solution(object):
     def sortVowels(self, s):
 
-        k='AEIOUaeiou'
+        k=set('AEIOUaeiou')
 
         l=['']*len(s)
         d=defaultdict(int)
