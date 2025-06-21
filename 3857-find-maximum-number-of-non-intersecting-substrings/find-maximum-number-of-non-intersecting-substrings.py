@@ -1,11 +1,15 @@
 class Solution(object):
-    def maxSubstrings(self, s):
-        res = 0
-        pos = {}
-        for i, c in enumerate(s):
-            if c not in pos:
-                pos[c] = i
-            elif i - pos[c] + 1 >= 4:
-                res += 1
-                pos = {}
-        return res
+    def maxSubstrings(self, w):
+
+        h=defaultdict(int)
+        c=0
+
+        for i in range(len(w)):
+            if w[i] in h:
+                if i-h[w[i]]+1>=4:
+                    c+=1
+                    h=defaultdict(int)
+                continue
+            h[w[i]]=i
+        return c
+
