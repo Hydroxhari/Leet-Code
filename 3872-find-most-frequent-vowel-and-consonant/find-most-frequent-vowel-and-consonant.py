@@ -1,15 +1,12 @@
 class Solution(object):
     def maxFreqSum(self, s):
 
-        v=0
-        c=0
-        d=Counter(s)
-
-        for i in d.keys():
-            if i in {'a', 'e', 'i', 'o', 'u'}:
-                v=max(v,d[i])
+        c=Counter(s)
+        mv=0
+        mc=0
+        for i in c.keys():
+            if i in {'a','e','i','o','u'}:
+                mv=max(mv,c[i])
             else:
-                c=max(c,d[i])
-        
-        return v+c
-        
+                mc=max(mc,c[i])
+        return mv+mc        
