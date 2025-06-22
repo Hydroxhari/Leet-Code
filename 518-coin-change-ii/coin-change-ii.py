@@ -1,16 +1,14 @@
 class Solution:
     def change(self, a: int, c: List[int]) -> int:
-        from functools import lru_cache
 
-        n = len(c)
-
+        c.sort()
         @lru_cache(None)
-        def dfs(i,a):
+        def dp(a,s):
             if a==0:
-                return 1
-            if a<0 or i==n:
+                return 1 
+            if a<0 or s==len(c):
                 return 0
+            
+            return dp(a-c[s],s)+dp(a,s+1)
 
-            return dfs(i,a-c[i]) + dfs(i+1,a)
-
-        return dfs(0,a)
+        return dp(a,0)
