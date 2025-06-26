@@ -1,10 +1,14 @@
 class Solution(object):
     def removeDuplicates(self, n):
-        s=set(n)
-        n[:] = []  
-        for i in s:
-            n.append(i)
-        n.sort()
+
+        j=0
+        v=set()
+
+        for i in range(1,len(n)):
+            if n[i]!=n[j]:
+                n[j+1]=n[i]
+                j+=1
+        
+        return j+1
 
             
-        
