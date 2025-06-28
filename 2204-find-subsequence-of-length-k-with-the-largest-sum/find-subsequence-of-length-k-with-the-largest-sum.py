@@ -1,16 +1,15 @@
+import heapq
+
 class Solution(object):
     def maxSubsequence(self, n, k):
+        # Pair each value with its index
+        paired = [(val, i) for i, val in enumerate(n)]
 
-        h=[]
-        for i in range(len(n)):
-            heapq.heappush(h,(-n[i],i))
-        
-        l=heapq.nsmallest(k,h)
-        l.sort(key=lambda x:x[1])
-        r=[]
-        for i,j in l:
-            r.append(-i)
-        return r
+        # Pick k largest values using value as key
+        top_k = heapq.nlargest(k, paired, key=lambda x: x[0])
 
+        # Sort by original index to preserve subsequence order
+        top_k.sort(key=lambda x: x[1])
 
-
+        # Extract just the values
+        return [val for val, idx in top_k]
