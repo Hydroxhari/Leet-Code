@@ -1,8 +1,16 @@
 class Solution(object):
     def climbStairs(self, n):
-        if n == 1:
+
+        if n<=1:
             return 1
-        a, b = 1, 2  # base cases for 1 and 2 steps
-        for i in range(3, n + 1):
-            a, b = b, a + b  # Update for the next step
-        return b
+        if n==2:
+            return 2
+
+        dp=[0]*(n+1)
+        dp[0]=0
+        dp[1]=1
+        dp[2]=2
+
+        for i in range(3,n+1):
+            dp[i]=dp[i-1]+dp[i-2]
+        return dp[-1]
