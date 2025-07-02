@@ -1,12 +1,14 @@
-class Solution(object):
-    def lengthOfLIS(self, arr):
-        piles = []
+from bisect import bisect_left
 
-        for num in arr:
-            pos = bisect.bisect_left(piles, num)  # Binary search position
-            if pos == len(piles):
-                piles.append(num)  # New pile
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        sub = []  # this will store the increasing subsequence (not necessarily actual subsequence)
+        
+        for num in nums:
+            idx = bisect_left(sub, num)  # find insertion point
+            if idx == len(sub):
+                sub.append(num)
             else:
-                piles[pos] = num   # Replace in the existing pile
-
-        return len(piles)
+                sub[idx] = num  # replace to maintain smallest possible tail
+                
+        return len(sub)
