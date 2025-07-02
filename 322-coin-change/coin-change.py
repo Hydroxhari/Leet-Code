@@ -1,23 +1,11 @@
-class Solution:
-    def coinChange(self, c: List[int], a: int) -> int:
+class Solution(object):
+    def coinChange(self, c, a):
 
-        if not a:
-            return 0
-        c.sort(reverse=True)
-        
-        @lru_cache(None)
-        def dp(a):
-            n=float('inf')
+        dp=[float('inf')]*(a+1)
+        dp[0]=0
+        for i in range(1,a+1):
+            for j in c:
+                if i-j>=0:
+                    dp[i]=min(dp[i],1+dp[i-j])
+        return dp[-1] if dp[-1]!=float('inf') else -1
 
-            if a==0:
-                return 0
-
-            for i in c:
-                if a>=i:
-                    n=min(1+dp(a-i),n)
-            
-            return n 
-            
-        
-        return(dp(a) if dp(a)!=float('inf') else -1)
-        
