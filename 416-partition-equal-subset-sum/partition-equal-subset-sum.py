@@ -1,26 +1,14 @@
 class Solution(object):
     def canPartition(self, n):
 
-        s=sum(n)
-        if s%2!=0:
-            return False
-        t=s//2
+        if sum(n)%2!=0:
+            return  False
+        t=sum(n)//2
 
-        memo={}
+        dp=[0]*(t+1)
+        dp[0]=1
 
-        def dp(r,i):
-            if (r,i) in memo:
-                return memo[(r,i)]
-            if r==0:
-                memo[(r,i)]=True
-                return True
-            if r<0 or i==len(n):
-                memo[(r,i)]=False
-                return False
-            
-
-
-            memo[(r,i)]=dp(r-n[i],i+1) or dp(r,i+1)
-            return memo[(r,i)]
-        
-        return dp(t,0)
+        for i in n:
+            for j in range(t,i-1,-1):
+                dp[j]=dp[j] or dp[j-i]
+        return dp[-1]==1
