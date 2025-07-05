@@ -1,22 +1,15 @@
 class Solution(object):
-    def findMaxLength(self, n):
-        for i in range(len(n)):
-            if n[i]==0:
-                n[i]=-1
-        
-        d={}
+    def findMaxLength(self, nums):
+        count = 0
+        max_len = 0
+        d = {0: -1}  # base case: sum=0 seen at index -1
 
-        s=0
-        m=0
+        for i in range(len(nums)):
+            count += -1 if nums[i] == 0 else 1
 
-        for i in range(len(n)):
-            s+=n[i]
-
-            if 0+s in d:
-                m=max(m,i-d[0+s])
+            if count in d:
+                max_len = max(max_len, i - d[count])
             else:
-                d[s]=i
-            
-            if s==0:
-                m=max(m,i+1)
-        return m
+                d[count] = i
+
+        return max_len
