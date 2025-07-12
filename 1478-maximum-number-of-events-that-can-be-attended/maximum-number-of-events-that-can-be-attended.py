@@ -1,26 +1,21 @@
-from heapq import heappush, heappop
+class Solution(object):
+    def maxEvents(self, ev):
 
-class Solution:
-    def maxEvents(self, events):
-        events.sort()  # Sort by start day
-        minHeap = []
-        day = 0
-        i = 0
-        res = 0
-        n = len(events)
+        h=[]
+        md=max(i for _, i in ev)
+        ev.sort()
+        c=0
+        i=0
 
-        while i < n or minHeap:
-            if not minHeap:
-                day = events[i][0]
-            # Push all events starting today into heap
-            while i < n and events[i][0] <= day:
-                heappush(minHeap, events[i][1])
-                i += 1
-            # Attend the event that ends the earliest
-            heappop(minHeap)
-            res += 1
-            day += 1
-            # Remove expired events
-            while minHeap and minHeap[0] < day:
-                heappop(minHeap)
-        return res
+        for d in range(1,md+1):
+            while i<len(ev) and ev[i][0]==d:
+                heapq.heappush(h,ev[i][1])
+                i+=1
+            
+            while h and h[0]<d:
+                heapq.heappop(h)
+            
+            if h:
+                heapq.heappop(h)
+                c+=1
+        return c
