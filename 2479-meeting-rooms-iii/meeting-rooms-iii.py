@@ -1,29 +1,28 @@
 class Solution(object):
-    def mostBooked(self,n, meetings):
-        busy = [0] * n  # End time of each room
-        count = [0] * n  # Number of times each room is booked
+    def mostBooked(self, n, me):
 
-        meetings.sort()
+        me.sort()
+        fr=list(range(n))
+        ur=[]
+        rc=[0]*n
 
-        for start, end in meetings:
-            earliest = float('inf')
-            roomIndex = -1
-            assigned = False
+        for s,e in me:
+            while ur and ur[0][0]<=s:
+                _,cur = heapq.heappop(ur)
+                heapq.heappush(fr,cur)
+            
+            dr = e-s
 
-            for i in range(n):
-                if busy[i] < earliest:
-                    earliest = busy[i]
-                    roomIndex = i
-                if busy[i] <= start:
-                    busy[i] = end
-                    count[i] += 1
-                    assigned = True
-                    break
-
-            if not assigned:
-                busy[roomIndex] += end - start
-                count[roomIndex] += 1
-
-        maxCount = max(count)
-        return count.index(maxCount)
+            if fr:
+                cfr = heapq.heappop(fr)
+                heapq.heappush(ur,(e,cfr))
+                rc[cfr]+=1
+            else:
+                eet,cur = heapq.heappop(ur)
+                heapq.heappush(ur,(eet+dr,cur))
+                rc[cur]+=1
         
+        c=max(rc)
+        for i in range(n):
+            if rc[i]==c:
+                return i
