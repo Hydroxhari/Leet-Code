@@ -1,19 +1,19 @@
-class Solution:
-    def matchPlayersAndTrainers(self, players: list[int], trainers: list[int]) -> int:
-        players.sort()
-        trainers.sort()
+class Solution(object):
+    def matchPlayersAndTrainers(self, p, t):
 
-        count = 0
-        i = j = 0
+        p.sort()
+        t.sort()
 
-        while i < len(players) and j < len(trainers):
-            if players[i] <= trainers[j]:
-                # Match found
-                count += 1
-                i += 1
-                j += 1
+        i=0
+        j=0
+        c=0
+
+        while i<len(p) and j<len(t):
+            if t[j]>=p[i]:
+                c+=1
+                i+=1
+                j+=1
             else:
-                # Try next trainer
-                j += 1
-
-        return count
+                j+=1
+        
+        return c
