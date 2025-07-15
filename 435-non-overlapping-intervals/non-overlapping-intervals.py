@@ -1,14 +1,15 @@
-__import__("atexit").register(lambda: open("display_runtime.txt", "w").write("10"))
-
 class Solution(object):
-    def eraseOverlapIntervals(self, intervals):
-        intervals.sort(key=lambda x:x[0])
+    def eraseOverlapIntervals(self, l):
+
+        l.sort(key= lambda x:x[1])
+
+        fs,fe=l[0][0],l[0][1]
+        s=[l[0]]
         c=0
-        end=intervals[0][1]
-        for i in range(1,len(intervals)):
-            if intervals[i][0]<end:
+
+        for i,j in l[1:]:
+            if fe>i:
                 c+=1
-                end=min(end,intervals[i][1])
             else:
-                end=intervals[i][1]
-        return c        
+                fe=j
+        return c
