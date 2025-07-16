@@ -1,14 +1,12 @@
 class Solution(object):
     def gcdOfStrings(self, s1, s2):
+        if s1 + s2 != s2 + s1:
+            return ""
         
-        s=''
-        l=len(s1)
-        sl=len(s2)
-        for i in range(1,len(s2)+1):
-            cs=s2[:i]
-            if cs in s1:
-                c=s1.count(cs)
-                sc=s2.count(cs)
-                if l%len(cs)==0 and sl%len(cs)==0 and sc==(sl//len(cs)) and c==(l//len(cs)):
-                    s=cs
-        return s
+        def gcd(a, b):
+            while b:
+                a, b = b, a % b
+            return a
+
+        gcd_len = gcd(len(s1), len(s2))
+        return s1[:gcd_len]
