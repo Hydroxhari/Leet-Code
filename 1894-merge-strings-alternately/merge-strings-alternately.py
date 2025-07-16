@@ -1,12 +1,22 @@
 class Solution(object):
-    def mergeAlternately(self, q, w):
+    def mergeAlternately(self, word1, word2):
+        """
+        :type word1: str
+        :type word2: str
+        :rtype: str
+        """
+    
+        m = len(word1)
+        n = len(word2)
+        loopcount = max(len(word1),len(word2))
+        result = ''
+        
+        for i in range(loopcount):
+            if i < m:
+                result += word1[i]
 
-        i,j=0,0
-        s=''
-        while i<max(len(q),len(w)):
-            if i<len(q):
-                s+=q[i]
-            if i<len(w):
-                s+=w[i]
-            i+=1
-        return s
+            if i < n:   
+                result += word2[i]
+
+        return result
+        
