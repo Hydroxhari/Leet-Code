@@ -1,19 +1,7 @@
 class Solution(object):
-    def moveZeroes(self, n):
-
-        lp=0
-        while lp<len(n):
-            if n[lp]==0:
-                break
-            lp+=1 
-        rp=1
-
-        for rp in range(1,len(n)):
-            if lp<len(n) and rp>lp and n[lp]==0 and n[rp]!=0:
-                n[lp],n[rp]=n[rp],n[lp]
-                lp+=1
-                while lp<len(n):
-                    if n[lp]==0:
-                        break
-                    lp+=1
-            
+    def moveZeroes(self, nums):
+        pos = 0  # Position to place next non-zero
+        for i in range(len(nums)):
+            if nums[i] != 0:
+                nums[pos], nums[i] = nums[i], nums[pos]
+                pos += 1
