@@ -1,1 +1,1 @@
-<h2>container-with-most-water Notes</h2><hr>[ Time taken: 3 m 45 s ]
+<h2>container-with-most-water Notes</h2><hr>[ Time taken: 2 m 1 s ]
