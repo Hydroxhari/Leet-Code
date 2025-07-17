@@ -1,14 +1,12 @@
 class Solution(object):
-    def maxArea(self, ht):
-        
+    def maxArea(self, l):
+        i,j=0,len(l)-1
         m=0
-        i,j=0,len(ht)-1
-
         while i<j:
-            s=(j-i)*min(ht[i],ht[j])
-            m=max(m,s)
-
-            if ht[i]>ht[j]:
+            b=j-i
+            h=min(l[i],l[j])
+            m=max(m,b*h)
+            if l[i]>l[j]:
                 j-=1
             else:
                 i+=1
