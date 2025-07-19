@@ -2,12 +2,12 @@ class Solution(object):
     def rob(self, n):
 
         memo={}
-        def dp(i,c):
+        def dp(i):
             if i>=len(n):
-                return c
-            if (i,c) in memo:
-                return memo[(i,c)]
+                return 0
+            if i in memo:
+                return memo[i]
             
-            memo[(i,c)]=max(dp(i+1,c),dp(i+2,c+n[i]))
-            return memo[(i,c)]
-        return dp(0,0)
+            memo[i]=max(dp(i+1),n[i]+dp(i+2))
+            return memo[i]
+        return dp(0)
