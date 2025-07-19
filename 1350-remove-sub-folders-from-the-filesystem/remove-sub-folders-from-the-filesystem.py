@@ -1,8 +1,13 @@
 class Solution(object):
     def removeSubfolders(self, folder):
+        """
+        :type folder: List[str]
+        :rtype: List[str]
+        """
         folder.sort()
-        res = []
-        for f in folder:
-            if not res or not f.startswith(res[-1] + "/"):
-                res.append(f)
-        return res
+        ans=[folder[0]]
+        n=len(folder)
+        for i in range(1,n):
+            if not folder[i].startswith(ans[-1]+'/'):
+                ans.append(folder[i])
+        return ans
