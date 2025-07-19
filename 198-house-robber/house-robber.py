@@ -1,12 +1,13 @@
-class Solution:
-    def rob(self, n: List[int]) -> int:
+class Solution(object):
+    def rob(self, n):
 
-        @lru_cache(None)
-        def dp(i,s):
+        memo={}
+        def dp(i,c):
             if i>=len(n):
-                return s
+                return c
+            if (i,c) in memo:
+                return memo[(i,c)]
             
-            return max(dp(i+2,s+n[i]),dp(i+1,s))
-
+            memo[(i,c)]=max(dp(i+1,c),dp(i+2,c+n[i]))
+            return memo[(i,c)]
         return dp(0,0)
-        
