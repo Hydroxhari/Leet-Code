@@ -1,19 +1,19 @@
 class Solution(object):
     def insert(self, l, n):
-        l.append(n)
-        l.sort()
 
-        q = []
-        q.append(l[0])
+        r=[]
 
-        for i in l[1:]:
-            x = q[-1][1]
-            s,e = i[0],i[1]
+        st,et=n[0],n[1]
 
-            if s<=x:
-                q[-1][1] = max(x,e)
+        i=0
+        while i<len(l):
+            cs,ce=l[i][0],l[i][1]
+            if ce<st or cs>et:
+                r.append([cs,ce])
             else:
-                q.append(i)
-        
-        return q
-        
+                st=min(cs,st)
+                et=max(ce,et)
+            i+=1
+            
+        r.append([st,et])
+        return sorted(r)
