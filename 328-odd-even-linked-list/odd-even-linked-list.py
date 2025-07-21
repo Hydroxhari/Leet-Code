@@ -13,17 +13,12 @@ class Solution(object):
         co=h.next
         oh=co
 
-        while co.next:
-            if co.next:
-                ce.next=co.next
-                ce=ce.next
-
-            if ce.next:
-                co.next=ce.next
-                co=co.next
-            else:
-                co.next=None
-            
+        while co and co.next:
+            ce.next=co.next
+            ce=ce.next
+            co.next=ce.next
+            co=co.next
+        
         ce.next=oh
     
         return h
