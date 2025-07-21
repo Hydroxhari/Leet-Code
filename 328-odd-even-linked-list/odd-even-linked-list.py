@@ -6,15 +6,14 @@
 class Solution(object):
     def oddEvenList(self, h):
 
-        if not h:
+        if not h or not h.next:
             return h
         
         ce=h
         co=h.next
-        oh=h.next
-        im=False
+        oh=co
 
-        while co and co.next:
+        while co.next:
             if co.next:
                 ce.next=co.next
                 ce=ce.next
