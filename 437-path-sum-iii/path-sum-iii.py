@@ -1,18 +1,21 @@
+from collections import defaultdict
+
 class Solution(object):
     def pathSum(self, root, target):
-        if not root:
-            return 0
-
-        def count_paths_from_node(node, curr_sum):
+        def dfs(node, curr_sum):
             if not node:
                 return 0
-            count = 0
-            if node.val == curr_sum:
-                count += 1
-            count += count_paths_from_node(node.left, curr_sum - node.val)
-            count += count_paths_from_node(node.right, curr_sum - node.val)
+
+            curr_sum += node.val
+            count = prefix[curr_sum - target]
+
+            prefix[curr_sum] += 1
+            count += dfs(node.left, curr_sum)
+            count += dfs(node.right, curr_sum)
+            prefix[curr_sum] -= 1  # backtrack
+
             return count
 
-        return (count_paths_from_node(root, target) +
-                self.pathSum(root.left, target) +
-                self.pathSum(root.right, target))
+        prefix = defaultdict(int)
+        prefix[0] = 1
+        return dfs(root, 0)
