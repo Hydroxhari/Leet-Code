@@ -1,6 +1,5 @@
 class Solution(object):
     def longestOnes(self, n, k):
-
         j=0
         m=0
         for i in range(len(n)):
@@ -12,3 +11,6 @@ class Solution(object):
                 j+=1
             m=max(m,i-j+1)
         return m
+
+
+        
