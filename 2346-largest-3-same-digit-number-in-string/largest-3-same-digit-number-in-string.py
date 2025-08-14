@@ -5,6 +5,3 @@ class Solution(object):
             if str(i)*3 in n:
                 return str(i)*3
         return ''
-
-
-        
