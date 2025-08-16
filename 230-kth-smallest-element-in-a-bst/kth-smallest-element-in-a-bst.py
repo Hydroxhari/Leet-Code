@@ -1,21 +1,17 @@
 class Solution(object):
-    def kthSmallest(self, r, k):
-        self.c=0
-        self.a=None
-
-        def io(r):
-            if not r or self.a is not None:
-                return 
-            
-            io(r.left)
-
-            self.c+=1
-            if self.c==k:
-                self.a=r.val
-                return 
-            
-            io(r.right)
+    def kthSmallest(self, root, k):
+        self.k = k
+        self.res = None
         
-        io(r)
-        return self.a
-            
+        def inorder(node):
+            if not node or self.res is not None:
+                return
+            inorder(node.left)
+            self.k -= 1
+            if self.k == 0:
+                self.res = node.val
+                return
+            inorder(node.right)
+        
+        inorder(root)
+        return self.res
