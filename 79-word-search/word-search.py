@@ -1,33 +1,26 @@
 class Solution(object):
     def exist(self, b, w):
-        m, n = len(b), len(b[0])  # Dimensions of the board
+        
+        d={(0,1),(1,0),(-1,0),(0,-1)}
 
-        def backtrack(i, j, k):
-            # Base case: If we've matched all characters in the word
-            if k == len(w):
+        def dp(i,j,wi,s):
+            if wi==len(w):
                 return True
+            it=False
+            for x,y in d:
+                ni,nj=x+i,y+j
+                if 0<=ni<m and 0<=nj<n and b[ni][nj]==w[wi] and (ni,nj) not in s:
+                    s.add((ni,nj))
+                    it=it or dp(ni,nj,wi+1,s)
+                    s.remove((ni,nj))
+            return it                 
+        
+        
+        m,n=len(b),len(b[0])
+        ot=False
 
-            # Boundary check and character mismatch check
-            if i < 0 or i >= m or j < 0 or j >= n or b[i][j] != w[k]:
-                return False
-
-            # Save the current cell and mark it as visited
-            temp = b[i][j]
-            b[i][j] = '#'
-
-            # Explore all 4 possible directions (right, left, down, up)
-            for x, y in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-                if backtrack(i + x, j + y, k + 1):
-                    return True
-
-            # Backtrack: Restore the original character
-            b[i][j] = temp
-            return False
-
-        # Start backtracking from each cell matching the first character
         for i in range(m):
             for j in range(n):
-                if b[i][j] == w[0] and backtrack(i, j, 0):
-                    return True
-
-        return False
+                if b[i][j]==w[0]:
+                    ot= ot or dp(i,j,1,{(i,j)})
+        return ot
