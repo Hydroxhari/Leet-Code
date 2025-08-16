@@ -2,7 +2,6 @@ class Solution(object):
     def solveNQueens(self, n):
 
         l=[]
-
         def ip(i,j,b):
             for x in range(i):
                 if b[x][j]=='Q':
@@ -23,6 +22,7 @@ class Solution(object):
                 for x in b:
                     cl.append(''.join(x))
                 l.append(cl)
+                return 
             
             for j in range(n):
                 if ip(i,j,b):
