@@ -1,37 +1,38 @@
-__import__("atexit").register(lambda: open("display_runtime.txt", "w").write("0"))
-
 class Solution(object):
     def solveNQueens(self, n):
-        g = [['.'] * n for _ in range(n)]
-        a = []  # Stores final solutions
 
-        def is_valid(r, c, gr):
-            # Check column
-            for i in range(r):
-                if gr[i][c] == 'Q':
+        l=[]
+
+        def ip(i,j,b):
+            for x in range(i):
+                if b[x][j]=='Q':
                     return False
             
-            # Check diagonals
-            for i in range(r):
-                diff = r - i
-                if c - diff >= 0 and gr[i][c - diff] == 'Q':  # Top-left diagonal
-                    return False
-                if c + diff < n and gr[i][c + diff] == 'Q':  # Top-right diagonal
-                    return False
-            
+            for x,y in [(-1,-1),(1,1),(-1,1),(1,-1)]:
+                ni,nj=i+x,j+y
+                while 0<=ni<n and 0<=nj<n:
+                    if b[ni][nj]=='Q':
+                        return False
+                    ni+=x
+                    nj+=y
             return True
-
-        def backtrack(r):
-            if r == n:
-                # Convert board to string format
-                a.append(["".join(row) for row in g])
-                return
+        
+        def bt(i,b):
+            if i==n:
+                cl=[]
+                for x in b:
+                    cl.append(''.join(x))
+                l.append(cl)
             
-            for c in range(n):
-                if is_valid(r, c, g):
-                    g[r][c] = "Q"
-                    backtrack(r + 1)
-                    g[r][c] = '.'  # Backtrack
+            for j in range(n):
+                if ip(i,j,b):
+                    b[i][j]='Q'
+                    bt(i+1,b)
+                    b[i][j]='.'
+            
+        
+        b=[['.' for _ in range(n)]for _ in range(n)]
+        print(b)
+        bt(0,b)
 
-        backtrack(0)
-        return a
+        return l
