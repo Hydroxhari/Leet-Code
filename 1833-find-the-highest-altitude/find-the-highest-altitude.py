@@ -1,9 +1,8 @@
 class Solution(object):
     def largestAltitude(self, g):
-
         m=0
-        s=0
+        c=0
         for i in g:
-            s+=i
-            m=max(m,s)
+            c+=i
+            m=max(m,c)
         return m
