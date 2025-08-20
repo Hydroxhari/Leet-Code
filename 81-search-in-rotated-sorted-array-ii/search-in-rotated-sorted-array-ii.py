@@ -7,8 +7,7 @@ class Solution:
             if nums[mid] == target:
                 return True
             # handling all duplicate condition
-            if nums[low] == nums[mid] == nums[high]:
-                low +=1
+            if nums[low]==nums[high]:
                 high-=1
             # when the left side is sorted
             elif nums[mid] >= nums[low]:
