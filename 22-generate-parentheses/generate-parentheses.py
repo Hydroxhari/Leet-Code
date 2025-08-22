@@ -3,16 +3,15 @@ class Solution(object):
 
         l=[]
 
-        def b(s,o,c):
-            if len(s)==n*2:
-                l.append(s)
+        def bt(s,o,c):
+            if len(s)==2*n:
+                l.append(s[:])
                 return
             
-            if o<n:
-                b(s+'(',o+1,c)
-            
-            if c<o:
-                b(s+')',o,c+1)
-
-        b('',0,0)
+            if o>0 and o<=c:
+                bt(s+'(',o-1,c)
+            if c>o:
+                bt(s+')',o,c-1)
+        
+        bt('',n,n)
         return l
