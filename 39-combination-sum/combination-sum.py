@@ -1,22 +1,17 @@
-__import__("atexit").register(lambda: open("display_runtime.txt", "w").write("0"))
-
 class Solution(object):
-    def combinationSum(self, c, k):
-        s=[]
-        c.sort()
+    def combinationSum(self, l, t):
 
-        def bt(st,l,t):
+        s=set()
+
+        def bt(t,al):
             if t==0:
-                s.append(l[:])
-                return
+                nt=tuple(sorted(al))
+                s.add(nt)
             
-            for i in range(st,len(c)):
-                if t<c[i]:
-                    break
-                l.append(c[i])
-                bt(i,l,t-c[i])
-                l.pop()
+            for i in l:
+                if t-i>=0:
+                    bt(t-i,al+[i])
+        
+        bt(t,[])
 
-        bt(0,[],k)
-        return s
-
+        return list(s)
