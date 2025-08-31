@@ -1,43 +1,52 @@
-class Solution(object):
-    def solveSudoku(self, board):
-        rows, cols, boxes = [set() for _ in range(9)], [set() for _ in range(9)], [set() for _ in range(9)]
-        empty_cells = []
-        
-        # Preprocess the board
-        for i in range(9):
-            for j in range(9):
-                if board[i][j] == '.':
-                    empty_cells.append((i, j))  # Store empty cell positions
-                else:
-                    num = board[i][j]
-                    rows[i].add(num)
-                    cols[j].add(num)
-                    boxes[(i // 3) * 3 + (j // 3)].add(num)
+class Solution:
+    def solveSudoku(self, board: list[list[str]]) -> None:
+        n, N = 3, 9
+        rows = [[0] * (N + 1) for _ in range(N)]
+        cols = [[0] * (N + 1) for _ in range(N)]
+        boxes = [[0] * (N + 1) for _ in range(N)]
+        sudokuSolved = False
 
-        def backtrack(index):
-            if index == len(empty_cells):
-                return True  # Board solved
+        def couldPlace(d, row, col):
+            idx = (row // n) * n + col // n
+            return rows[row][d] + cols[col][d] + boxes[idx][d] == 0
 
-            r, c = empty_cells[index]  # Get next empty cell
-            box_index = (r // 3) * 3 + (c // 3)
+        def placeNumber(d, row, col):
+            idx = (row // n) * n + col // n
+            rows[row][d] += 1
+            cols[col][d] += 1
+            boxes[idx][d] += 1
+            board[row][col] = str(d)
 
-            for num in map(str, range(1, 10)):  # Try numbers '1' to '9'
-                if num not in rows[r] and num not in cols[c] and num not in boxes[box_index]:
-                    # Place the number
-                    board[r][c] = num
-                    rows[r].add(num)
-                    cols[c].add(num)
-                    boxes[box_index].add(num)
+        def removeNumber(d, row, col):
+            idx = (row // n) * n + col // n
+            rows[row][d] -= 1
+            cols[col][d] -= 1
+            boxes[idx][d] -= 1
+            board[row][col] = '.'
 
-                    if backtrack(index + 1):  # Recursively solve next empty cell
-                        return True  # Stop if solution is found
+        def placeNextNumbers(row, col):
+            nonlocal sudokuSolved
+            if row == N - 1 and col == N - 1:
+                sudokuSolved = True
+            elif col == N - 1:
+                backtrack(row + 1, 0)
+            else:
+                backtrack(row, col + 1)
 
-                    # Undo move (backtrack)
-                    board[r][c] = '.'
-                    rows[r].remove(num)
-                    cols[c].remove(num)
-                    boxes[box_index].remove(num)
+        def backtrack(row, col):
+            nonlocal sudokuSolved
+            if board[row][col] == '.':
+                for d in range(1, 10):
+                    if couldPlace(d, row, col):
+                        placeNumber(d, row, col)
+                        placeNextNumbers(row, col)
+                        if not sudokuSolved:
+                            removeNumber(d, row, col)
+            else:
+                placeNextNumbers(row, col)
 
-            return False  # No valid number found, backtrack
-
-        backtrack(0)
+        for i in range(N):
+            for j in range(N):
+                if board[i][j] != '.':
+                    placeNumber(int(board[i][j]), i, j)
+        backtrack(0, 0)
