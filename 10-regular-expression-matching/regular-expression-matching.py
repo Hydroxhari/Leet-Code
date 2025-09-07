@@ -1,21 +1,18 @@
 class Solution(object):
     def isMatch(self, s, p):
-        memo = {}
+        from functools import lru_cache
 
-        def dp(i, j):
-            if (i, j) in memo:
-                return memo[(i, j)]
-
+        @lru_cache(None)
+        def bt(i, j):
             if j == len(p):
                 return i == len(s)
 
-            first_match = i < len(s) and (s[i] == p[j] or p[j] == '.')
+            first_match = i < len(s) and (p[j] == s[i] or p[j] == '.')
 
-            if j+1 < len(p) and p[j+1] == '*':
-                memo[(i, j)] = dp(i, j+2) or (first_match and dp(i+1, j))
+            if j + 1 < len(p) and p[j+1] == '*':
+                # two choices: skip the "x*" or use it if first_match
+                return bt(i, j+2) or (first_match and bt(i+1, j))
             else:
-                memo[(i, j)] = first_match and dp(i+1, j+1)
+                return first_match and bt(i+1, j+1)
 
-            return memo[(i, j)]
-
-        return dp(0, 0)
+        return bt(0, 0)
