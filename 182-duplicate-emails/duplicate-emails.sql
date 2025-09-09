@@ -1,1 +1,2 @@
-select email from person group by email having count(email)>1
+select email from (select email,count(*) as cnt from Person group by email) nt
+where cnt>1
