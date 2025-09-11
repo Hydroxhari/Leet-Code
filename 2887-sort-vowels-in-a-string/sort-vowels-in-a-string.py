@@ -1,26 +1,27 @@
 class Solution(object):
     def sortVowels(self, s):
-        vowels = []
 
-        s_list = list(s)
+        k=set('AEIOUaeiou')
 
-        # collect all vowels
-        for i in s_list:
-            if i in "AEIOUaeiou":
-                vowels.append(i)
+        l=['']*len(s)
+        d=defaultdict(int)
+        for i in range(len(s)):
+            if s[i] not in k:
+                l[i]=s[i]
+            else:
+                d[s[i]]+=1
         
-        if vowels == []:
-            return s
+        r=[[i,j] for i,j in d.items()]
+        r.sort()
 
-        # sort the vowels
-        vowels.sort()
+        for i in range(len(s)):
+            if l[i]=='':
+                l[i]=r[0][0]
+                r[0][1]-=1
+                if r[0][1]==0:
+                    r.pop(0)
 
-        count = 0
+        return ''.join(l)
 
-        # replace original vowels with sorted ones
-        for j in range(len(s)):
-            if s_list[j] in "AEIOUaeiou":
-                s_list[j] = vowels[count]
-                count += 1
-        
-        return "".join(s_list)
+
+
