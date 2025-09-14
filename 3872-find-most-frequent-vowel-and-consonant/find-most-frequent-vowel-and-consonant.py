@@ -1,12 +1,11 @@
 class Solution(object):
     def maxFreqSum(self, s):
-
         c=Counter(s)
-        mv=0
-        mc=0
+        vf,cf=0,0
         for i in c.keys():
-            if i in {'a','e','i','o','u'}:
-                mv=max(mv,c[i])
+            if i in 'aeiou':
+                vf=max(vf,c[i])
             else:
-                mc=max(mc,c[i])
-        return mv+mc        
+                cf=max(cf,c[i])
+        return vf+cf
+        
