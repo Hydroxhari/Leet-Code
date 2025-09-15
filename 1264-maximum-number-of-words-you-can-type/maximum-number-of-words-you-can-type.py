@@ -1,10 +1,17 @@
 class Solution(object):
-    def canBeTypedWords(self, t, b):
-        l = t.split(' ')
-        sb=set(b)
-        c=0
-        for i in l:
-            si = set(i)
-            if len(si&sb)==0:
-                c+=1
-        return c        
+    def canBeTypedWords(self, text, broken):
+        mask = 0
+        for ch in broken:
+            mask |= 1 << (ord(ch) - 97)
+        
+        count = 0
+        brokenWord = False
+        n = len(text)
+        for i in range(n + 1):
+            if i < n and 'a' <= text[i] <= 'z' and (mask & (1 << (ord(text[i]) - 97))):
+                brokenWord = True
+            if i == n or text[i] == ' ':
+                if not brokenWord:
+                    count += 1
+                brokenWord = False
+        return count
