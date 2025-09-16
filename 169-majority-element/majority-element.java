@@ -2,14 +2,19 @@ class Solution {
     public int majorityElement(int[] n) {
         int l = n.length;
         int k = l/2;
-        HashMap<Integer,Integer> d = new HashMap<>();
+        Arrays.sort(n);
+        int p=-1;
+        int c=0;
         for (int i:n){
-            d.put(i,d.getOrDefault(i,0)+1);
-        }
-        for (int i: d.keySet()){
-            int v = d.get(i);
-            if (v>k){
-                return i;
+            if (p==-1 || i==p){
+                c++;
+                if (c>k){
+                    return i;
+                }
+            }
+            else{
+                c=1;
+                p=i;
             }
         }
         return 0;
