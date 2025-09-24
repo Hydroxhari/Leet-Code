@@ -1,29 +1,30 @@
 class Solution:
     def fractionToDecimal(self, numerator: int, denominator: int) -> str:
-        if numerator == 0:
-            return "0"
+        if numerator % denominator == 0:
+            return str(numerator // denominator)
 
-        fraction = []
-        if (numerator < 0) ^ (denominator < 0):
-            fraction.append("-")
+        negative = (numerator < 0) ^ (denominator < 0)
+        numerator, denominator = abs(numerator), abs(denominator)
 
-        dividend = abs(numerator)
-        divisor = abs(denominator)
-        fraction.append(str(dividend // divisor))
-        remainder = dividend % divisor
-        if remainder == 0:
-            return "".join(fraction)
+        integer_part = numerator // denominator
+        result = "-" if negative else ""
+        result += str(integer_part) + "."
 
-        fraction.append(".")
-        map_dict = {}
+        remainder = numerator % denominator
+        remainders = {}
+        decimal_part = []
+
         while remainder != 0:
-            if remainder in map_dict:
-                fraction.insert(map_dict[remainder], "(")
-                fraction.append(")")
+            if remainder in remainders:
+                repeat_index = remainders[remainder]
+                decimal_part.insert(repeat_index, "(")
+                decimal_part.append(")")
                 break
-            map_dict[remainder] = len(fraction)
-            remainder *= 10
-            fraction.append(str(remainder // divisor))
-            remainder %= divisor
 
-        return "".join(fraction)
+            remainders[remainder] = len(decimal_part)
+            remainder *= 10
+            digit = remainder // denominator
+            decimal_part.append(str(digit))
+            remainder %= denominator
+
+        return result + "".join(decimal_part)
