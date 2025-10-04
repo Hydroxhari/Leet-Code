@@ -1,13 +1,18 @@
-class Solution(object):
-    def maxArea(self, l):
-        i,j=0,len(l)-1
-        m=0
-        while i<j:
-            b=j-i
-            h=min(l[i],l[j])
-            m=max(m,b*h)
-            if l[i]>l[j]:
-                j-=1
+class Solution:
+    def maxArea(self, height):
+        left = 0
+        right = len(height) - 1
+        max_area = 0
+        
+        while left < right:
+            # Calculate the area
+            current_area = min(height[left], height[right]) * (right - left)
+            max_area = max(max_area, current_area)
+            
+            # Move the pointer pointing to the shorter line
+            if height[left] < height[right]:
+                left += 1
             else:
-                i+=1
-        return m
+                right -= 1
+        
+        return max_area
