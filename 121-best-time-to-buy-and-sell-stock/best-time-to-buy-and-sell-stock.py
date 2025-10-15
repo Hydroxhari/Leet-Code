@@ -1,11 +1,10 @@
 class Solution(object):
     def maxProfit(self, p):
 
-        m=float('inf')
-        r=0
-
+        s=float('inf')
+        m=0
         for i in p:
-            m=min(m,i)
-            r=max(r,i-m)
-        return r
+            s=min(s,i)
+            m=max(m,i-s)
+        return m
         
