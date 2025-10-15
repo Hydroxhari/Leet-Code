@@ -1,11 +1,9 @@
 class Solution(object):
     def rotate(self, n, k):
 
-        l=len(n)
+        l=[1]*len(n)
+        for i in range(len(n)):
+            l[(i+k)%len(n)]=n[i]
+        n[:]=l[:]
 
-        na=[1]*l
-
-        for i in range(l):
-            na[(i+k)%l]=n[i]
-        print(na)
-        n[:]=na[:]
+        
