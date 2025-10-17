@@ -1,7 +1,7 @@
 class Solution(object):
-    def missingNumber(self, n):
-
-        l=len(n)
-        s=(l*(l+1))//2
-        c=sum(n)
-        return s-c
+    def missingNumber(self, nu):
+        
+        n=len(nu)
+        s=(n*(n+1))//2
+        m=sum(nu)
+        return s-m
