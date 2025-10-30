@@ -1,21 +1,39 @@
 class Solution(object):
-    def compress(self, chars):
-        write = 0
-        read = 0
+    def compress(self, s):
+        a=0
+        c=1
 
-        while read < len(chars):
-            ch = chars[read]
-            count = 0
-            while read < len(chars) and chars[read] == ch:
-                read += 1
-                count += 1
-            
-            chars[write] = ch
-            write += 1
+        for i in range(1,len(s)):
+            if s[i]==s[i-1]:
+                c+=1
+            else:
+                if c==1:
+                    s[a]=s[i-1]
+                elif c<10:
+                    s[a]=s[i-1]
+                    a+=1
+                    s[a]=str(c)
+                else:
+                    s[a]=s[i-1]
+                    sc=str(c)
+                    for k in sc:
+                        a+=1
+                        s[a]=k
+                a+=1
+                c=1
+        if c==1:
+            s[a]=s[-1]
+        elif c<10:
+            s[a]=s[-1]
+            a+=1
+            s[a]=str(c)
+        else:
+            s[a]=s[-1]
+            sc=str(c)
+            for k in sc:
+                a+=1
+                s[a]=k
+                
+        a+=1
 
-            if count > 1:
-                for digit in str(count):
-                    chars[write] = digit
-                    write += 1
-
-        return write
+        return a
