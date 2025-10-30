@@ -1,9 +1,7 @@
-__import__("atexit").register(lambda: open("display_runtime.txt", "w").write("0"))
-
 class Solution(object):
     def longestPalindrome(self, s):
-
-        def e(l,r):
+        
+        def ep(l,r):
             while l>=0 and r<len(s) and s[l]==s[r]:
                 l-=1
                 r+=1
@@ -11,11 +9,12 @@ class Solution(object):
         
         a=''
         for i in range(len(s)):
-            t=e(i,i)
-            if len(t)>len(a):
-                a=t
-            t=e(i,i+1)
-            if len(t)>len(a):
-                a=t
-        return a           
+            f = ep(i,i)
+            d = ep(i,i+1)
+
+            if len(f)>len(a):
+                a=f
+            if len(d)>len(a):
+                a=d
+        return a
         
