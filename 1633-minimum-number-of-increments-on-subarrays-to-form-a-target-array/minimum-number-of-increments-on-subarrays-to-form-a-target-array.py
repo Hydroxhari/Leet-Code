@@ -1,9 +1,11 @@
 class Solution(object):
     def minNumberOperations(self, t):
 
-        t=[0]+t
+        p=0
         c=0
-        for i in range(1,len(t)):
-            if t[i]>t[i-1]:
-                c+=t[i]-t[i-1]
+        for i in t:
+            if i>p:
+                c+=i-p
+            p=i
         return c
+        
