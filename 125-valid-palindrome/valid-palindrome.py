@@ -1,9 +1,11 @@
 class Solution(object):
     def isPalindrome(self, s):
-        r=''
-        for i in s:
-            if i.isalnum():
-                r+=i.lower()
-        return r==r[::-1]
 
-        
+        s.strip()
+        n=''
+        for i in s:
+            if i.isalpha():
+                n+=lower(i)
+            elif i.isdigit():
+                n+=i
+        return n==n[::-1]
