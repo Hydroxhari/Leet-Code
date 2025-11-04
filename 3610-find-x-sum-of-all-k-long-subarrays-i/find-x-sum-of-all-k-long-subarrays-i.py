@@ -34,3 +34,8 @@ class Solution(object):
             res.append(summ)
             
         return res
+
+            
+                
+            
+            
