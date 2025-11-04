@@ -1,22 +1,24 @@
 class Solution(object):
     def trap(self, h):
 
-        w=0
-        l,r=0,len(h)-1
+        l=[]
+        m=0
+        for i in h:
+            m=max(m,i)
+            l.append(m)
+        
+        r=[]
+        m=0
+        for i in h[::-1]:
+            m=max(m,i)
+            r.append(m)
+        r=r[::-1]
+        
+        c=0
+        for i in range(len(h)):
+            c+=min(l[i],r[i])-h[i]
+        return c
 
-        lm,rm=0,0
 
-        while l<r:
-            if h[l]<h[r]:
-                if h[l]>=lm:
-                    lm=h[l]
-                else:
-                    w+=lm-h[l]
-                l+=1
-            else:
-                if h[r]>=rm:
-                    rm=h[r]
-                else:
-                    w+=rm-h[r]
-                r-=1
-        return w
+
+
