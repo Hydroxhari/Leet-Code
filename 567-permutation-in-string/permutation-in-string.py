@@ -1,23 +1,21 @@
 class Solution(object):
     def checkInclusion(self, s1, s2):
 
-        if len(s1)>len(s2):
+        a=len(s1)
+        b=len(s2)
+        if a>b:
             return False
+        c=Counter(s1)
+        l=Counter(s2[:a])
 
-        c=defaultdict(int)
-        w=defaultdict(int)
-        for i in range(len(s1)):
-            w[s2[i]]+=1
-            c[s1[i]]+=1
-        if c==w:
+        def dp(l):
+            return all(l[i]==j for i,j in c.items())
+
+        if dp(l):
             return True
-        for i in range(len(s1),len(s2)):
-            w[s2[i]]+=1
-            w[s2[i-len(s1)]]-=1
-            if w[s2[i-len(s1)]]==0:
-                del w[s2[i-len(s1)]]
-
-            if c==w:
+        for i in range(a,b):
+            l[s2[i-a]]-=1
+            l[s2[i]]+=1
+            if dp(l):
                 return True
         return False
-            
