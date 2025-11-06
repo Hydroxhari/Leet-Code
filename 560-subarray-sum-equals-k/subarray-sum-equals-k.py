@@ -3,6 +3,7 @@ class Solution(object):
 
         d=defaultdict(int)
         d[0]=1
+
         s=0
         c=0
         for i in n:
@@ -10,4 +11,4 @@ class Solution(object):
             if s-k in d:
                 c+=d[s-k]
             d[s]+=1
-        return c 
+        return c
