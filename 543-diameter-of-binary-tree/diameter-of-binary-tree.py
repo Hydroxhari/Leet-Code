@@ -1,19 +1,14 @@
-__import__("atexit").register(lambda: open("display_runtime.txt", "w").write("0"))
-
 class Solution(object):
-    def diameterOfBinaryTree(self, r):
-
-        self.d=0
-
-        def dfs(r):
-            if not r:
+    def diameterOfBinaryTree(self, root):
+        self.ans = 0
+        
+        def dfs(node):
+            if not node:
                 return 0
-
-            ln=dfs(r.left)
-            rn=dfs(r.right)
-
-            self.d=max(self.d,ln+rn) 
-
-            return 1+max(ln,rn)
-        dfs(r)
-        return self.d
+            left = dfs(node.left)
+            right = dfs(node.right)
+            self.ans = max(self.ans, left + right)
+            return 1 + max(left, right)
+        
+        dfs(root)
+        return self.ans
