@@ -3,16 +3,17 @@ class Solution(object):
 
         if not r:
             return 0
-            
-        d=deque([r])
-        rs=0
-        while d:
-            l=len(d)
+        q=deque([r])
+        c=0
+
+        while q:
+            l=len(q)
             for _ in range(l):
-                e=d.popleft()
-                if e.left:
-                    d.append(e.left)
-                if e.right:
-                    d.append(e.right)
-            rs+=1
-        return rs
+                n=q.popleft()
+                if n.left:
+                    q.append(n.left)
+                if n.right:
+                    q.append(n.right)
+            c+=1
+        return c
+        
