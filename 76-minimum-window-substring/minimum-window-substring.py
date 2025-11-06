@@ -1,19 +1,22 @@
 class Solution(object):
     def minWindow(self, s, t):
 
-        a,b=len(s),len(t)
-        if b>a:
-            return ''
-        
         c=Counter(t)
-        r=Counter()
-        m=s*2
+        m=float('inf')
+        fo=''
+
         j=0
-        for i in range(a):
-            r[s[i]]+=1
-            while all(r[x]>=y for x,y in c.items()):
-                if len(m)>i-j+1:
-                    m=s[j:i+1]
-                r[s[j]]-=1
+
+        cc=Counter()
+
+        for i in range(len(s)):
+            cc[s[i]]+=1
+
+            while all(c[k]<=cc[k] for k in c.keys()):
+                if m>i-j+1:
+                    m=i-j+1
+                    fo=s[j:i+1]
+                cc[s[j]]-=1
                 j+=1
-        return '' if m==s*2 else m
+
+        return fo
