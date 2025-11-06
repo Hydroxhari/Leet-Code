@@ -1,15 +1,13 @@
 class Solution(object):
     def isBalanced(self, r):
-        def dfs(r):
-            if not r:
-                return 0
-            
-            ln=dfs(r.left)
-            rn=dfs(r.right)
-
-            if ln==-1 or rn==-1 or abs(ln-rn)>1:
-                return -1
-            
-            return 1+max(ln,rn)
         
-        return dfs(r)!=-1
+        def dfs(n):
+            if not n:
+                return 0
+            l = dfs(n.left)
+            ri = dfs(n.right)
+            if l == -1 or ri == -1 or abs(l - ri) > 1:
+                return -1
+            return 1 + max(l, ri)
+        
+        return dfs(r) != -1
