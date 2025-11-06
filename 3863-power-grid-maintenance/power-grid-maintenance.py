@@ -1,59 +1,44 @@
-import heapq
 from collections import defaultdict
+import heapq
 
-class Solution(object):
+class Solution:
     def processQueries(self, c, connections, queries):
-        """
-        :type c: int
-        :type connections: List[List[int]]
-        :type queries: List[List[int]]
-        :rtype: List[int]
-        """
-        parent = [i for i in range(c)]
-        size = [1] * c
-        mp = defaultdict(list)
-        offline = [False] * c
+        parent = list(range(c + 1))
 
-        for i in range(c):
-            heapq.heappush(mp[i], i)
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])
+            return parent[x]
 
-        def findParent(node):
-            if parent[node] != node:
-                parent[node] = findParent(parent[node])
-            return parent[node]
+        def union(x, y):
+            parent[find(x)] = find(y)
 
-        def Union(u, v):
-            up = findParent(u)
-            vp = findParent(v)
-            if up == vp:
-                return
-            if size[up] > size[vp]:
-                size[up] += size[vp]
-                parent[vp] = up
-                while mp[vp]:
-                    heapq.heappush(mp[up], heapq.heappop(mp[vp]))
-            else:
-                size[vp] += size[up]
-                parent[up] = vp
-                while mp[up]:
-                    heapq.heappush(mp[vp], heapq.heappop(mp[up]))
-
+        # Step 1: Build Union-Find
         for u, v in connections:
-            Union(u - 1, v - 1)
+            union(u, v)
 
-        ans = []
+        # Step 2: Build component heaps
+        component_heaps = defaultdict(list)
+        online = [True] * (c + 1)
+        for i in range(1, c + 1):
+            root = find(i)
+            heapq.heappush(component_heaps[root], i)
 
-        for t, node in queries:
-            node -= 1
-            if t == 1:
-                if not offline[node]:
-                    ans.append(node + 1)
-                    continue
-                par = findParent(node)
-                while mp[par] and offline[mp[par][0]]:
-                    heapq.heappop(mp[par])
-                ans.append(-1 if not mp[par] else mp[par][0] + 1)
+        res = []
+        for typ, x in queries:
+            root = find(x)
+            if typ == 1:
+                if online[x]:
+                    res.append(x)
+                else:
+                    # Find the smallest online station in the component
+                    while component_heaps[root] and not online[component_heaps[root][0]]:
+                        heapq.heappop(component_heaps[root])
+                    if component_heaps[root]:
+                        res.append(component_heaps[root][0])
+                    else:
+                        res.append(-1)
             else:
-                offline[node] = True
+                online[x] = False
 
-        return ans
+        return res
