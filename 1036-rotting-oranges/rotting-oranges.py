@@ -12,9 +12,10 @@ class Solution(object):
                 elif g[i][j]==2:
                     d.append((i,j))
         
-        c=-1
+        c=0
         sc=0
         while d:
+            c+=1
             l=len(d)
             for _ in range(l):
                 e=d.popleft()
@@ -26,9 +27,8 @@ class Solution(object):
                         d.append((nx,ny))
                         sc+=1
                         g[nx][ny]=2
-            c+=1
         
         if sc!=t:
             return -1  
 
-        return 0 if c<0 else c
+        return  0 if c==0 else c-1
