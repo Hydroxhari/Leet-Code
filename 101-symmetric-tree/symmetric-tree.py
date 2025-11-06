@@ -1,24 +1,22 @@
 class Solution(object):
     def isSymmetric(self, r):
-        if not r:
-            return False
         
-        a=deque([r.left])
-        b=deque([r.right])
+        lf=deque([r.left])
+        ri=deque([r.right])
 
-        while a and b:
-            e1=a.popleft()
-            e2=b.popleft()
-
-            if not e1 and not e2:
+        while lf and ri:
+            ln=lf.popleft()
+            rn=ri.popleft()
+            if (ln and not rn) or (not ln and rn):
+                return False
+            elif not ln and not rn:
                 continue
-            
-            if not e1 or not e2 or e1.val!=e2.val:
+            elif ln.val!=rn.val:
                 return False
             
-            a.append(e1.left)
-            a.append(e1.right)
-            b.append(e2.right)
-            b.append(e2.left)
-        
-        return not a and not b
+            lf.append(ln.left)
+            lf.append(ln.right)
+            ri.append(rn.right)
+            ri.append(rn.left)
+
+        return True
