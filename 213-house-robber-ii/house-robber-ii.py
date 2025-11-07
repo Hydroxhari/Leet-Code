@@ -1,25 +1,22 @@
 class Solution(object):
     def rob(self, n):
-        l=len(n)
-        if l==0:
-            return 0
-        if l==1:
+
+        if len(n)==1:
             return n[0]
+        if len(n)==2:
+            return max(n)
 
-        def r(n):
-            l=len(n)
-            if l==0:
+        me=defaultdict(int)
+        def dp(i,j):
+            if (i,j) in me:
+                return me[(i,j)]
+            if i>=len(n)-j:
                 return 0
-            if l==1:
-                return n[0]
-                
-            dp=[0]*l
-            dp[0]=n[0]
-            dp[1]=max(n[0],n[1])
-
-            for i in range(2,l):
-                dp[i]=max(dp[i-1],n[i]+dp[i-2])
-
-            return dp[l-1]
             
-        return max(r(n[1:]),r(n[:-1]))
+            t=n[i]+dp(i+2,j)
+            dt=dp(i+1,j)
+
+            me[(i,j)] = max(t,dt)
+            return me[(i,j)]
+        
+        return max(dp(0,1),dp(1,0))
