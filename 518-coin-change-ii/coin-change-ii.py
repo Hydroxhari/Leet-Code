@@ -1,9 +1,9 @@
 class Solution(object):
     def change(self, a, c):
+        n = [0] * (a + 1)
+        n[0] = 1
 
-        dp=[0]*(a+1)
-        dp[0]=1
-        for i in c:
-            for j in range(i,a+1):
-                dp[j]+=dp[j-i]
-        return dp[-1]
+        for coin in c:
+            for i in range(coin, a + 1):
+                n[i] += n[i - coin]
+        return n[-1]
