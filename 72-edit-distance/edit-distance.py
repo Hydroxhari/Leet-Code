@@ -1,28 +1,27 @@
-from functools import lru_cache
+from collections import defaultdict
 
-class Solution:
-    def minDistance(self, w: str, t: str) -> int:
+class Solution(object):
+    def minDistance(self, a, b):
 
-        l, k = len(w), len(t)
+        d = defaultdict(int)
 
-        @lru_cache(None)  # Memoization cache
-        def dfs(i, j):
+        def dp(i, j):
+            if (i, j) in d:
+                return d[(i, j)]
+
             # Base cases
-            if i == l:  # If we have exhausted all characters in w
-                return k - j  # We need to insert the remaining characters of t
-            if j == k:  # If we have exhausted all characters in t
-                return l - i  # We need to delete the remaining characters of w
-            
-            # If characters match, no operation needed, move to the next characters
-            if w[i] == t[j]:
-                return dfs(i + 1, j + 1)
+            if i == len(a):
+                return len(b) - j
+            if j == len(b):
+                return len(a) - i
 
-            # Otherwise, calculate the minimum number of operations (insert, delete, replace)
-            delete = dfs(i + 1, j)  # Deleting a character from w
-            insert = dfs(i, j + 1)  # Inserting a character into w (i.e., matching it to t)
-            replace = dfs(i + 1, j + 1)  # Replacing a character in w with the one in t
+            tak = float('inf')
+            if a[i] == b[j]:
+                tak = dp(i + 1, j + 1)
+            ins = 1 + dp(i, j + 1)   # insert
+            rep = 1 + dp(i + 1, j + 1)  # replace
+            dep = 1 + dp(i + 1, j)   # delete
+            d[(i, j)] = min(ins, rep, dep, tak)
+            return d[(i, j)]
 
-            return 1 + min(delete, insert, replace)  # Add 1 for the current operation
-
-        # Start from the beginning of both strings
-        return dfs(0, 0)
+        return dp(0, 0)
