@@ -15,13 +15,13 @@ class Solution(object):
             if j == len(b):
                 return len(a) - i
 
-            tak = float('inf')
             if a[i] == b[j]:
-                tak = dp(i + 1, j + 1)
-            ins = 1 + dp(i, j + 1)   # insert
-            rep = 1 + dp(i + 1, j + 1)  # replace
-            dep = 1 + dp(i + 1, j)   # delete
-            d[(i, j)] = min(ins, rep, dep, tak)
+                d[(i, j)] = dp(i + 1, j + 1)
+            else:
+                ins = 1 + dp(i, j + 1)   # insert
+                rep = 1 + dp(i + 1, j + 1)  # replace
+                dep = 1 + dp(i + 1, j)   # delete
+                d[(i, j)] = min(ins, rep, dep)
             return d[(i, j)]
 
         return dp(0, 0)
