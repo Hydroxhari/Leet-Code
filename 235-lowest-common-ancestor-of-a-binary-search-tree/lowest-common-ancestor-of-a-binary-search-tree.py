@@ -1,11 +1,24 @@
-__import__("atexit").register(lambda: open("display_runtime.txt", "w").write("0"))
-
 class Solution(object):
-    def lowestCommonAncestor(self, root, p, q):
-        if root.val > p.val and root.val > q.val:
-            return self.lowestCommonAncestor(root.left, p, q)
-        elif root.val < p.val and root.val < q.val:
-            return self.lowestCommonAncestor(root.right, p, q)
-        else:
-            return root
+    def lowestCommonAncestor(self, r, p, q):
 
+        self.ans = None
+
+        def dfs(n):
+            if not n:
+                return 0
+
+            # Count matches in left and right
+            left = dfs(n.left)
+            right = dfs(n.right)
+            
+            mid = (n == p) or (n == q)
+            
+            # If any two of left, right, mid are True → LCA
+            if left + right + mid >= 2 and not self.ans:
+                self.ans = n
+
+            # Return True if this node is p/q or any child has p/q
+            return left or right or mid
+
+        dfs(r)
+        return self.ans
