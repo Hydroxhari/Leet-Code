@@ -1,19 +1,11 @@
 class Solution(object):
     def coinChange(self, c, a):
+        n = [float('inf')] * (a + 1)
+        n[0] = 0  # base: 0 coins needed for amount 0
 
+        for i in range(1, a + 1):
+            for j in c:
+                if i - j >= 0:
+                    n[i] = min(n[i], 1 + n[i - j])
 
-        memo={}
-        def dp(a):
-            if a==0:
-                return 0
-            if a in memo:
-                return memo[a]
-            m=float('inf')
-            for i in c:
-                if a-i>=0:
-                    m=min(m,1+dp(a-i))
-
-            memo[a]=m
-            return m
-
-        return dp(a) if dp(a)!=float('inf') else -1
+        return n[a] if n[a] != float('inf') else -1
