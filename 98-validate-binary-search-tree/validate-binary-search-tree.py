@@ -1,12 +1,13 @@
 class Solution(object):
     def isValidBST(self, r):
-        
-        def bst(v,lf,ri):
-            if not v:
-                return True
-            if not (lf<v.val<ri):
-                return False
-            
-            return bst(v.left,lf,v.val) and bst(v.right,v.val,ri)
 
-        return bst(r,float('-inf'),float('inf'))
+        def dfs(n, lv, rv):
+            if not n:
+                return True  # empty node is valid
+
+            if n.val <= lv or n.val >= rv:
+                return False
+
+            return dfs(n.left, lv, n.val) and dfs(n.right, n.val, rv)
+
+        return dfs(r, float('-inf'), float('inf'))
