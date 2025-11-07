@@ -1,1 +1,1 @@
-<h2>string-compression Notes</h2><hr>[ Time taken: 22 m 56 s ]
+<h2>string-compression Notes</h2><hr>[ Time taken: 5 m 43 s ]
