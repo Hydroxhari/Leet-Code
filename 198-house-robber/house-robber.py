@@ -1,13 +1,17 @@
 class Solution(object):
     def rob(self, n):
 
-        memo={}
+        d=defaultdict(int)
         def dp(i):
+            if i in d:
+                return d[i]
             if i>=len(n):
                 return 0
-            if i in memo:
-                return memo[i]
             
-            memo[i]=max(dp(i+1),n[i]+dp(i+2))
-            return memo[i]
+            t=n[i]+dp(i+2)
+            dt=dp(i+1)
+            
+            d[i]=max(t,dt)
+            return d[i]
+        
         return dp(0)
