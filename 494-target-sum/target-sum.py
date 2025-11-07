@@ -1,18 +1,15 @@
-class Solution:
-    def findTargetSumWays(self, c: List[int], t: int) -> int:
-        from functools import lru_cache
+class Solution(object):
+    def findTargetSumWays(self, n, t):
 
-        n = len(c)
+        d=defaultdict(int)
+        def dp(i,s):
+            if (i,s) in d:
+                return d[(i,s)]
 
-        @lru_cache(None)
-        def dfs(i,a):
-            if i==n and a==t:
-                return 1
+            if i==len(n):
+                return s==t
             
-            if i==n:
-                return 0
-            
-            return dfs(i+1,a-c[i]) + dfs(i+1,a+c[i])
+            d[(i,s)] = dp(i+1,s+n[i]) + dp(i+1,s-n[i])
+            return d[(i,s)]
         
-        return dfs(0,0)
-
+        return dp(0,0)
