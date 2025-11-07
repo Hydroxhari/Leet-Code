@@ -1,1 +1,1 @@
-<h2>climbing-stairs Notes</h2><hr>[ Time taken: 6 m 23 s ]
+<h2>climbing-stairs Notes</h2><hr>[ Time taken: 2 m 8 s ]
