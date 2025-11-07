@@ -3,14 +3,17 @@ class Solution(object):
 
         s=[]
         for i in a:
-            if i<0:
-                while s and s[-1]>0 and s[-1]<-i:
+            cs=False
+            while s and i<0 and s[-1]>0:
+                if abs(i)>s[-1]:
                     s.pop()
-                if s and s[-1]==-i:
+                elif abs(i)==s[-1]:
                     s.pop()
-                    continue
-                if not s or s[-1]<0:
-                    s.append(i)
-            else:
+                    cs=True
+                    break
+                else:
+                    cs=True
+                    break
+            if not cs:
                 s.append(i)
         return s
