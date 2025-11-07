@@ -1,32 +1,23 @@
 class Solution(object):
-    def findOrder(self, n, pre):
+    def findOrder(self, n, p):
 
-        g=defaultdict(list)
-        l=[]
-
-        for i,j in pre:
-            g[i].append(j)
+        d=defaultdict(list)
+        a=[0]*n
+        for i,j in p:
+            d[j].append(i)
+            a[i]+=1
         
-        v=set()
-        p=set()
+        q=deque([i for i in range(n) if a[i]==0])
 
-        def dfs(i):
-            if i in v:
-                return 
-            
-            v.add(i)
-            p.add(i)
-            for j in g[i]:
-                if j in p:
-                    return 
-                if j not in v:
-                    dfs(j)
-            p.remove(i)
-            l.append(i)
-            return
-
-        for i in range(n):
-            if i not in v:
-                dfs(i)
+        ans=[]
+        c=0
+        while q:
+            e=q.popleft()
+            c+=1
+            ans.append(e)
+            for nei in d[e]:
+                a[nei]-=1
+                if a[nei]==0:
+                    q.append(nei)
         
-        return l if len(l)==n else []
+        return ans if c==n else []
