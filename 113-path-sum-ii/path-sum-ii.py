@@ -1,17 +1,19 @@
 class Solution(object):
     def pathSum(self, r, t):
+
         a=[]
-        l=[]
-        def ps(r,t,l):
-            if not r:
-                return 
-            if not r.left and not r.right and r.val==t:
-                l=l+[r.val]
-                a.append(l)
-                return 
-            t=t-r.val
-            ps(r.left,t,l+[r.val])
-            ps(r.right,t,l+[r.val])
-        ps(r,t,l)
-        return a
+        def dfs(n,c,l):
+            if not n:
+                return
             
+            c+=n.val
+            l.append(n.val)
+
+            if c==t and n.left==None and n.right==None:
+                a.append(l[:])
+            
+            dfs(n.left,c,l[:])
+            dfs(n.right,c,l[:])
+
+        dfs(r,0,[])
+        return a
