@@ -1,20 +1,19 @@
 class Solution(object):
     def reverseVowels(self, s):
         l=list(s)
-        i,j=0,len(s)-1
-        v={'a','e', 'i', 'o','u'}
+        v={'a','e','i','o','u','A','E','I','O','U'}
+
+        i=0
+        j=len(s)-1
         while i<j:
-            if s[i].lower() in v and s[j].lower() in v:
-                l[i],l[j]=l[j],l[i]
+            while i<j and s[i] not in v:
                 i+=1
+            while i<j and s[j] not in v:
                 j-=1
-            elif s[i].lower() in v:
-                j-=1
-            elif s[j].lower() in v:
-                i+=1
-            else:
-                i+=1
-                j-=1
+            
+            l[i],l[j]=l[j],l[i]
+            i+=1
+            j-=1
         return ''.join(l)
 
 
